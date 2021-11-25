@@ -1,3 +1,5 @@
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,14 +35,16 @@ public class ERPriorityQueue{
     TODO: Additional helper methods such as isLeaf(int i), isEmpty(), swap(int i, int j) could be useful for this assignment
      */
 	private boolean isLeaf(int i) {   // It is a leaf if both left and right children are null
-		int leftChildIndex = leftChild(i);
-		int rightChildIndex = rightChild(i);
+		int size = this.patients.size();
+		if(i > (size / 2) && i <= size) {
+			return true;
+		}
 		
-		return this.patients.get(rightChildIndex) == null && this.patients.get(leftChildIndex) == null;
+		return false;
 	}
 	
-	private boolean isEmpty() { 
-		return this.patients.isEmpty();
+	private boolean isEmpty() {     // Means that there is only the dummy node in the patients array list
+		return this.patients.size() == 1;
 	}
 	
 	private void swap(int i, int j) {
@@ -73,24 +77,65 @@ public class ERPriorityQueue{
 
 	public void downHeap(int i){
         // TODO: Implement your code here
-		int currentIndex = 1;
-		int currentLeftChildIndex = leftChild(currentIndex);
-		int child = 0;
+		int leftChild = leftChild(i);
+		int rightChild = rightChild(i);
+		int size = this.patients.size();
 		
-		while(currentLeftChildIndex <= i) {
-			child = currentLeftChildIndex;
-			if(child < i) {
-				if(this.patients.get(child + 1).getPriority() < this.patients.get(child).getPriority()) {
-					child = child + 1;
-				}
+		if(!isLeaf(i)) {
+			if(leftChild <= size && rightChild < size) {
+				if(this.patients.get(i).getPriority() > this.patients.get(leftChild).getPriority()
+					|| this.patients.get(i).getPriority() > this.patients.get(rightChild).getPriority()) {
+				
+					if(this.patients.get(leftChild).getPriority() < this.patients.get(rightChild).getPriority()) {
+						swap(i, leftChild);
+						downHeap(leftChild);
+					} else {
+						swap(i, rightChild);
+						downHeap(rightChild);
+					}
+				} 
 			}
-			if(this.patients.get(child).getPriority() < this.patients.get(i).getPriority()) {
-				swap(i, child);
-				i = child;
-			} else {
-				break;
-			}
+		} else {
+			return;
 		}
+		
+//		int currentIndex = 1;
+//		int currentLeftChildIndex = leftChild(currentIndex);
+//		int currentRightChildIndex = rightChild(currentIndex);
+//		int child = 0;
+//		
+//		while(currentLeftChildIndex <= i) {
+//			child = currentLeftChildIndex;
+//			if(child < i) {
+//				if(this.patients.get(child + 1).getPriority() < this.patients.get(child).getPriority()) {
+//					child = child + 1;
+//				}
+//			}
+//			if(this.patients.get(child).getPriority() < this.patients.get(currentIndex).getPriority()) {
+//				swap(currentIndex, child);
+//				currentIndex = child;
+//			} else {
+//				return;
+//			}
+//		}
+		
+//		if(currentIndex == 1) {
+//			Patient cur = this.patients.get(currentIndex);
+//			
+//			//Check priority of left child
+//			int leftIndex = leftChild(currentIndex);
+//			Patient leftChild = this.patients.get(leftIndex);
+//			
+//			//Check priority of right child
+//			int rightIndex = rightChild(currentIndex);
+//			Patient rightChild = this.patients.get(rightIndex);
+//			
+//			if(leftChild.getPriority() < cur.getPriority()) {
+//				swap(currentIndex, leftIndex);
+//			} else if (rightChild.getPriority() < cur.getPriority()) {
+//				swap(currentIndex, rightIndex);
+//			}
+//		}
 	}
 
 	public boolean contains(String name){
@@ -100,33 +145,52 @@ public class ERPriorityQueue{
 
 	public double getPriority(String name){
         // TODO: Implement your code here & remove return statement
-        return -1;
+		if(!(this.contains(name))) {
+			return -1;
+		}
+		int cur = this.nameToIndex.get(name);
+        return this.patients.get(cur).getPriority();
 	}
 
 	public double getMinPriority(){
         // TODO: Implement your code here & remove return statement
-        return -1;
+		if(this.isEmpty()) {
+			return -1;
+		}
+        return this.patients.get(1).getPriority();
 	}
 
 	public String removeMin(){
         // TODO: Implement your code here & remove return statement
-		if(this.patients.isEmpty()) {
-			return null;
-		}
-		int size = this.patients.size();
-		Patient temp = this.patients.get(1);
-		Patient lowPriority = this.patients.get(size);
-		this.patients.set(1, lowPriority);
-		this.patients.remove(size - 1);
-		//heap[size] = null;
-		downHeap(this.patients.size() - 1);
+		String result = "";
 		
-        return temp.getName();
+		if(this.isEmpty()) {
+			return null;
+		} else {
+			int size = this.patients.size();
+			Patient cur = this.patients.get(1);
+			Patient last = this.patients.get(size - 1);
+			swap(1, size - 1);
+//			this.patients.set(1, last);
+			this.patients.remove(this.patients.size() - 1);
+//			this.nameToIndex.put(last.getName(), 1);
+			this.nameToIndex.remove(cur.getName());
+			//heap[size] = null;
+			size = this.patients.size() - 1;
+			downHeap(size);
+			
+			result = cur.getName();
+		}
+
+        return result;
 	}
 
 	public String peekMin(){
         // TODO: Implement your code here & remove return statement
-        return null;
+		if(this.isEmpty()) {
+			return null;
+		}
+        return this.patients.get(1).getName();
 	}
 
 	/*
@@ -185,6 +249,7 @@ public class ERPriorityQueue{
 
 	public boolean changePriority(String name, double priority){
         // TODO: Implement your code here & remove return statement
+		
         return false;
 	}
 
