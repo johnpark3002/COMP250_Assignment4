@@ -249,17 +249,31 @@ public class ERPriorityQueue{
 
 	public boolean changePriority(String name, double priority){
         // TODO: Implement your code here & remove return statement
+		if(!(this.nameToIndex.containsKey(name))) {
+			return false;
+		}
 		Integer patientIndex = this.nameToIndex.get(name);
 		Patient patient = this.patients.get(patientIndex);
 		double patientPriority = patient.getPriority();
 		
+		int leftChild = leftChild(patientIndex);
+		int rightChild = rightChild(patientIndex);
+		int currentPatient = patientIndex;
+		
+		
 		if(patientPriority == priority) {
 			return false;
+		} else {
+			patient.setPriority(priority);
+			if(currentPatient < this.getMinPriority()) {
+				upHeap(currentPatient);
+			} else if(currentPatient > this.getMinPriority()) {
+				downHeap(currentPatient);
+			}
 		}
 		
 		
-		
-        return false;
+        return true;
 	}
 
 	public ArrayList<Patient> removeUrgentPatients(double threshold){

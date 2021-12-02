@@ -33,38 +33,38 @@ public class Test {
 //	        System.out.println(queue.patients.toString());
 		
 		
-		ERPriorityQueue queue = new ERPriorityQueue();
-        ERPriorityQueue.Patient Rio = new ERPriorityQueue.Patient("Rio", 1);
-        ERPriorityQueue.Patient Julia = new ERPriorityQueue.Patient("Julia", 2);
-        ERPriorityQueue.Patient Michael = new ERPriorityQueue.Patient("Michael", 13);
-        queue.patients.add(Rio);
-        queue.patients.add(Julia);
-        queue.patients.add(Michael);
-        queue.nameToIndex.put(Rio.getName(), 1);
-        queue.nameToIndex.put(Julia.getName(), 2);
-        queue.nameToIndex.put(Michael.getName(), 3);
-
-        ArrayList<ERPriorityQueue.Patient> truePatients = makeDeepCopy(queue.patients);
-        HashMap<String, Integer> trueNameToIndex = new HashMap<>(queue.nameToIndex);
-
-        // Removing Rio by removeMin()
-        swapList(truePatients, 1, 3);
-        swapHashMapValues(trueNameToIndex, "Rio", "Michael");
-        swapList(truePatients, 1, 2);
-        swapHashMapValues(trueNameToIndex, "Michael", "Julia");
-        truePatients.remove(3);
-        trueNameToIndex.remove("Rio");
-        String minPatientName = queue.removeMin();
-
-//        minPatientName = queue.removeMin();
-        
-        System.out.println(minPatientName);
-        
-        System.out.println(trueNameToIndex.toString());
-        System.out.println(queue.nameToIndex.toString());
-        
-        System.out.println(truePatients.toString());
-        System.out.println(queue.patients.toString());
+//		ERPriorityQueue queue = new ERPriorityQueue();
+//        ERPriorityQueue.Patient Rio = new ERPriorityQueue.Patient("Rio", 1);
+//        ERPriorityQueue.Patient Julia = new ERPriorityQueue.Patient("Julia", 2);
+//        ERPriorityQueue.Patient Michael = new ERPriorityQueue.Patient("Michael", 13);
+//        queue.patients.add(Rio);
+//        queue.patients.add(Julia);
+//        queue.patients.add(Michael);
+//        queue.nameToIndex.put(Rio.getName(), 1);
+//        queue.nameToIndex.put(Julia.getName(), 2);
+//        queue.nameToIndex.put(Michael.getName(), 3);
+//
+//        ArrayList<ERPriorityQueue.Patient> truePatients = makeDeepCopy(queue.patients);
+//        HashMap<String, Integer> trueNameToIndex = new HashMap<>(queue.nameToIndex);
+//
+//        // Removing Rio by removeMin()
+//        swapList(truePatients, 1, 3);
+//        swapHashMapValues(trueNameToIndex, "Rio", "Michael");
+//        swapList(truePatients, 1, 2);
+//        swapHashMapValues(trueNameToIndex, "Michael", "Julia");
+//        truePatients.remove(3);
+//        trueNameToIndex.remove("Rio");
+//        String minPatientName = queue.removeMin();
+//
+////        minPatientName = queue.removeMin();
+//        
+//        System.out.println(minPatientName);
+//        
+//        System.out.println(trueNameToIndex.toString());
+//        System.out.println(queue.nameToIndex.toString());
+//        
+//        System.out.println(truePatients.toString());
+//        System.out.println(queue.patients.toString());
 		
 		
 //		ArrayList<String> list = new ArrayList();
@@ -82,22 +82,36 @@ public class Test {
 //		System.out.println(list.get(list.size() - 1).toString());
 //		System.out.println(list.size());
 		
-//		ERPriorityQueue queue = new ERPriorityQueue();
-//        queue.patients.add(new ERPriorityQueue.Patient("Hannah",5));
-//        queue.patients.add(new ERPriorityQueue.Patient("Ebony",10));
-//        queue.patients.add(new ERPriorityQueue.Patient("Ahmad",15));
-//        queue.patients.add(new ERPriorityQueue.Patient("Zil",30));
-//        queue.patients.add(new ERPriorityQueue.Patient("Ricardo",60));
-//        queue.patients.add(new ERPriorityQueue.Patient("Yinou",50));
-//        queue.patients.add(new ERPriorityQueue.Patient("Gilbert",100));
+		ERPriorityQueue queue = new ERPriorityQueue();
+        queue.patients.add(new ERPriorityQueue.Patient("Hannah",5));
+        queue.patients.add(new ERPriorityQueue.Patient("Ebony",10));
+        queue.patients.add(new ERPriorityQueue.Patient("Ahmad",15));
+        queue.patients.add(new ERPriorityQueue.Patient("Zil",30));
+        queue.patients.add(new ERPriorityQueue.Patient("Ricardo",60));
+        queue.patients.add(new ERPriorityQueue.Patient("Yinou",50));
+        queue.patients.add(new ERPriorityQueue.Patient("Gilbert",100));
+        
+        queue.nameToIndex.put(queue.patients.get(1).getName(),1);
+        queue.nameToIndex.put(queue.patients.get(2).getName(),2);
+        queue.nameToIndex.put(queue.patients.get(3).getName(),3);
+        queue.nameToIndex.put(queue.patients.get(4).getName(),4);
+        queue.nameToIndex.put(queue.patients.get(5).getName(),5);
+        queue.nameToIndex.put(queue.patients.get(6).getName(),6);
+        queue.nameToIndex.put(queue.patients.get(7).getName(),7);
+        
+        queue.changePriority("Ahmad", 1);
+        
+        System.out.println(queue.patients.toString());
+        System.out.println(queue.nameToIndex.toString());
+        
+//        queue.patients.get(3).setPriority(1);
+//
+//        swapList(queue.patients,1,3);
+//        swapHashMapValues(queue.nameToIndex, "Hannah", "Ahmad");
 //        
-//        queue.nameToIndex.put(queue.patients.get(1).getName(),1);
-//        queue.nameToIndex.put(queue.patients.get(2).getName(),2);
-//        queue.nameToIndex.put(queue.patients.get(3).getName(),3);
-//        queue.nameToIndex.put(queue.patients.get(4).getName(),4);
-//        queue.nameToIndex.put(queue.patients.get(5).getName(),5);
-//        queue.nameToIndex.put(queue.patients.get(6).getName(),6);
-//        queue.nameToIndex.put(queue.patients.get(7).getName(),7);
+//        System.out.println(queue.patients.toString());
+//        System.out.println(queue.nameToIndex.toString());
+        
 //
 //        System.out.println(queue.patients.toString());
 //        
@@ -118,6 +132,10 @@ public class Test {
 //        System.out.println(queue.patients.toString());
 //        System.out.println(trueNameToIndex.toString());
 //        System.out.println(queue.nameToIndex.toString());
+		
+		
+		
+		
 	}
 	
 	 public static ArrayList<ERPriorityQueue.Patient> makeDeepCopy(ArrayList<ERPriorityQueue.Patient> list) {
