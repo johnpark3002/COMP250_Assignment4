@@ -249,18 +249,49 @@ public class ERPriorityQueue{
 
 	public boolean changePriority(String name, double priority){
         // TODO: Implement your code here & remove return statement
+		Integer patientIndex = this.nameToIndex.get(name);
+		Patient patient = this.patients.get(patientIndex);
+		double patientPriority = patient.getPriority();
+		
+		if(patientPriority == priority) {
+			return false;
+		}
+		
+		
 		
         return false;
 	}
 
 	public ArrayList<Patient> removeUrgentPatients(double threshold){
         // TODO: Implement your code here & remove return statement
-        return null;
+		ArrayList<Patient> urgentPatients = new ArrayList<Patient>();
+		for(Patient p : this.patients) {
+			double patientPriority = p.getPriority();
+			String patientName = p.getName();
+			if(patientPriority <= threshold) {
+				int patientIndex = this.nameToIndex.get(patientName);
+				urgentPatients.add(p);
+				this.patients.remove(patientIndex);
+				this.nameToIndex.remove(patientName);
+			}
+		}
+        return urgentPatients;
 	}
 
 	public ArrayList<Patient> removeNonUrgentPatients(double threshold){
         // TODO: Implement your code here & remove return statement
-        return null;
+		ArrayList<Patient> nonUrgentPatients = new ArrayList<Patient>();
+		for(Patient p : this.patients) {
+			double patientPriority = p.getPriority();
+			String patientName = p.getName();
+			if(patientPriority > threshold) {
+				int patientIndex = this.nameToIndex.get(patientName);
+				nonUrgentPatients.add(p);
+				this.patients.remove(patientIndex);
+				this.nameToIndex.remove(patientName);
+			}
+		}
+        return nonUrgentPatients;
 	}
 
 
